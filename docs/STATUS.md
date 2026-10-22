@@ -135,3 +135,68 @@ Next safe step: review the confidential local inventory on this PC and agree on
 an exact offline identification plan. Any payload inspection or extraction would
 be a separate task requiring explicit scope; generic ZIP recognition alone does
 not demonstrate Siemens archive decoding support.
+
+## Inventory-led identification plan - 2026-10-22
+
+The single selected ZIP copy matched the previous local SHA-256 baseline before
+inventory analysis. Local-data and report ignore rules were confirmed; no tracked
+backup/report risk was found. Only existing inventory metadata and installed help
+were analyzed; no member payload was opened or decompressed.
+
+No Siemens parser or verified Siemens SDK is installed in this repository.
+No Siemens Codex/VS Code skill has been established. A skill is not a decoder:
+actual identification requires payload evidence matched to documented syntax or
+a verified offline parser, with separate approval before member reads.
+
+Primary filename hypotheses (confidence refers to names, never confirmed content):
+
+| Category | Confidence | Evidence and limits |
+| --- | --- | --- |
+| PLC | High for source/project-like names | Several PLC source/project extensions coexist; valid syntax and project schema remain unverified |
+| Configuration | Medium | Structured/configuration extensions; not proof of NC machine data |
+| NC | Unsupported | No category-specific hit in the conservative inventory rules; absence is not proved |
+| Drive | Unsupported | No category-specific hit; absence is not proved |
+| HMI | Unsupported | No category-specific hit; absence is not proved |
+| Unknown | Low | Most files have database/index or other opaque extensions; no schemas decoded |
+
+This suggests a STEP 7 project-like ZIP, not a confirmed controller archive
+variant. Earlier generic NC/configuration grouping should not be interpreted as
+positive NC evidence: generic configuration files are ambiguous.
+
+Installed documentation findings:
+
+- STEP 7 readme documents standard ZIP archive/retrieval support. Its getting-
+  started manual describes Archive and Print commands. This is documentary
+  evidence only, not a tested project-open or export operation.
+- Installed S7-SCL manual describes ASCII sources and import/export, plus standard
+  editor source creation. No exact compiled-block-to-source workflow was verified.
+- Installed SinuTrain operating manual describes binary and punched-tape archives,
+  recommending punched-tape for external processing. This does not identify the
+  selected ZIP or supply a binary decoding schema.
+- Commissioning ATW guideline was searched without finding applicable archive-
+  format evidence. Add-on help candidates exist but ownership/content and archive
+  capabilities were not established. Compiled help was not decoded; no utility
+  or SDK API was verified. Search coverage is limited, not proof of nonexistence.
+
+Private report contains member-level groups, documentation locations/page evidence,
+confidence/reasons, and a shortlist of five nonempty small entries: likely PLC
+source, structured metadata, notes, and a possibly binary project descriptor.
+No payload classification has been confirmed. All details stay ignored locally.
+
+Proposed subsequent approved inspection only: recheck hash and exact allowlist;
+maximum five entries, 64 KiB decompressed per entry, 256 KiB aggregate, compression
+ratio at most 100, 100,000 inventory entries, and 64 MiB central-directory metadata.
+Reject links, traversal/absolute or ambiguous Windows paths, encryption, unsupported
+compression, duplicate names, and size inconsistencies. Stream at most 4 KiB chunks
+in a worker capped at 256 MiB and ten seconds with explicit actual-output counters;
+abort on limit or integrity failure. No extraction, nested archive processing,
+restore, or archive-provided filesystem paths. Generated private reports only in
+a new ignored local output directory, with confinement/reparse checks. Strict text
+encoding/BOM handling; binary, ambiguous encoding or unknown data stays unknown,
+with no guessed schema. Escape all output and do not render active content.
+No payload reader or extraction implementation was added in this run.
+
+Tests: existing standard-library suite passed, **11 tests, OK**. No dependency
+installation, network access, Siemens application launch, controller access,
+staging, commit or push. Approval is required before reading any shortlisted
+payload or using proprietary utilities. Exact Siemens format remains unresolved.

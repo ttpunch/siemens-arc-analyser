@@ -1,18 +1,19 @@
-# Prompt 02 — Identify a Local Siemens .arc Archive
+# Prompt 02 — Identify Local Siemens ZIP or ARC Archive
 
-Run after Prompt 01. Copy into Codex:
+Run after Prompt 01B. Copy the following instructions into Codex:
 
 ```text
-Read AGENTS.md and docs/STATUS.md. I will provide the path to a local Siemens SINUMERIK .arc archive.
+Read AGENTS.md and docs/STATUS.md. The user generated a backup using a Siemens application's "7-Zip archive (.zip)" option and placed a COPY in the repository's local_data/ folder. The software also offered "Siemens archive (.arc)" and "PKZIP archive (.zip)" options, but the current sample is the 7-Zip ZIP option. Do not infer the backup's internal Siemens structure or controller type from this description alone.
 
-Ask me for the local archive path if it is not yet known. Inspect the file strictly read-only; do not modify, move, extract, execute, or upload it.
+1. Check git status and confirm local_data/ and ZIP/ARC backup files are ignored. If any backup could be tracked, stop and report the risk.
+2. Find only archive files directly inside local_data/. If there is more than one, ask which to inspect. Do not search the wider computer.
+3. For the selected file, record its size and SHA-256 locally. Do not modify the file.
+4. Read the file signature and use the existing read-only archive inspector. For ZIP, use Python's zipfile module to check whether it is ZIP-compatible; record encryption flags, compression methods, and whether the central directory is readable. Avoid any operation that extracts or decompresses entry payloads, including zipfile.testzip().
+5. List ZIP member metadata only in a local gitignored report: entry paths, sizes, compressed sizes, flags, and folder hierarchy. Treat filenames and paths as confidential. Do not read file contents, extract entries, execute scripts, or invoke restore tools.
+6. Check for suspicious entries (absolute paths, ../ traversal, symlinks, duplicates, excessive size/count or compression ratios) without extracting. Flag any concerns.
+7. Summarize likely NC/PLC/drive/machine-data categories only where filenames provide evidence; distinguish inference from confirmed content. If the file is not a readable ZIP, report the exact failure and stop rather than guessing.
+8. Write a sanitized, high-level summary in docs/STATUS.md without real machine identifiers, member names, local paths, credentials, or hashes. Keep the detailed local report under local_data/.
+9. Run available tests without installing dependencies. Report results and recommend the next safe step. Do not commit or push anything without my approval.
 
-1. Record file size and a cryptographic hash locally.
-2. Inspect the file signature and run the project's non-extracting inspector.
-3. Determine whether it is a standard container or a Siemens-specific archive. Do not assume ZIP compatibility from the .arc extension.
-4. Investigate available installed Siemens tools and their documented archive support.
-5. Produce a local report of format evidence, confidence, limitations, and safe extraction options. Redact paths, machine identifiers, and secrets before sharing any report.
-6. Update docs/STATUS.md with non-sensitive findings only.
-
-Stop and ask me before installing software, using proprietary tools, or extracting contents. Never push the archive or raw inspection reports.
+Never modify the original backup, upload machine data, contact a CNC controller, launch Siemens applications, or extract/restore an archive. Ask permission before any new tool or software installation.
 ```

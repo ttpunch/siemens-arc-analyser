@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+local_data/
+raw_archives/
+extracted/
+reports/
+*.arc
+*.ARC
+*.zip
+*.7z
+.env

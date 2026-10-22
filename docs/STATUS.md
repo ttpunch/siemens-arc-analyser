@@ -200,3 +200,62 @@ Tests: existing standard-library suite passed, **11 tests, OK**. No dependency
 installation, network access, Siemens application launch, controller access,
 staging, commit or push. Approval is required before reading any shortlisted
 payload or using proprietary utilities. Exact Siemens format remains unresolved.
+
+## Approved bounded payload classification - 2026-10-22
+
+The prior private allowlist and unchanged archive baseline were verified before
+reading. Git ignore protection for private data and reports was confirmed; no
+tracked backup risk was present. Only the five previously shortlisted members
+were inspected. Exact names, hashes and member-level results remain exclusively
+in a new ignored local report directory. No raw member files were written.
+
+Confirmed observations:
+
+- Two members contain readable text with STEP 7-style block declarations, a body
+  start marker, and corresponding block-end markers. Readable PLC source text
+  was therefore observed, beyond filename clues. This is syntax-marker evidence,
+  not full grammar/type checking, compilation, verified project compatibility,
+  confirmation of controller-loaded logic, or proprietary binary decoding.
+- One member is well-formed structured XML metadata with no DTD/entities; its
+  configuration meaning and correctness have not been verified.
+- Two members remain binary/unknown under strict supported text decoding.
+  Their schemas and meanings were not guessed. No NC or drive payload content
+  was established by these five reads.
+
+Added an allowlisted in-memory reader supporting only stored/raw-deflate ZIP
+members, with bounded decompressor output and CRC/actual-size checks. It rejects
+unsafe or colliding paths, special/link entries, encrypted/unsupported entries,
+unsupported data descriptors, mismatched headers, overlapping selected compressed
+ranges, and recognizable nested archives. It does not implement extraction or
+Siemens-specific parsing. Unknown nested formats cannot be identified universally;
+no nested content is recursively opened.
+
+Limits enforced: five members, 64 KiB each, 256 KiB aggregate, compression ratio
+at most 100, 100,000 inventory entries, 64 MiB central-directory metadata, and
+chunks/output batches at most 4 KiB. A Windows Job Object enforces 256 MiB process
+and job committed-memory limits and a single-process limit; the parent enforces
+a ten-second wall-clock timeout with kill/wait on expiry. Memory configuration
+was queried back and a synthetic 300 MiB allocation failed under the cap. These
+Windows memory limits constrain committed memory, not a sampling-based RSS check.
+No additional member was read after the five authorized reads.
+
+The archive's before/after hashes matched the private baseline. The original
+backup was never accessed. No extraction, project opening, script execution from
+the archive, Siemens application launch, network operation, installation, restore,
+controller access, staging, commit or push occurred.
+
+Validation: **30 tests passed**, comprising the 11 existing tests and 19 new
+synthetic tests for source/text/binary/structured classification, malformed ZIPs,
+paths/collisions/links, encryption and unsupported compression, header/CRC errors,
+decompression/aggregate/ratio/metadata limits, baseline/allowlist checks, nested
+archive rejection, unchanged input, worker timeout handling and Windows memory
+limit enforcement. One initial XML-classification test found a self-closing-tag
+recognition defect; it was fixed before any real payload inspection.
+
+Remaining limitations: no Siemens parser or verified Siemens SDK is installed in
+this repository; opaque binary formats and complete project semantics remain
+unresolved. Synthetic test evidence does not imply general Siemens archive support.
+Recommended next step is local review of these limited findings, followed by a
+separately scoped authorization if further source analysis is wanted. No general
+extraction or subsequent adapter phase was started. Safe code, tests and this
+sanitized documentation are ready for review; private reports must remain ignored.

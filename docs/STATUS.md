@@ -259,3 +259,61 @@ Recommended next step is local review of these limited findings, followed by a
 separately scoped authorization if further source analysis is wanted. No general
 extraction or subsequent adapter phase was started. Safe code, tests and this
 sanitized documentation are ready for review; private reports must remain ignored.
+
+## Two-source structure analysis - 2026-10-22
+
+Reinspection was limited to the two previously verified source-text members.
+The original private baseline, exact two-member subset, archive selection,
+ignore protection and worker confinement were verified before reads. The same
+bounded reader retained all ZIP safety, size, ratio, chunk, memory and deadline
+checks. Archive before/after SHA-256 matched the prior private baseline. No other
+member payload was opened, and no raw member files were written to disk.
+
+Verified lexical structure observations:
+
+| Clearly delimited block type | Count |
+| --- | ---: |
+| DB | 3 |
+| FC | 1 |
+| OB | 0 |
+| FB | 0 |
+| UDT | 0 |
+
+These counts cover only the two authorized sources; zero does not imply absence
+from the project. Four declarations have matching delimiters and required body
+markers under the conservative recognizer. No incomplete/tentative block candidate
+was returned. Explicit identifiers, any symbolic declaration names, declaration
+sections and variable declarations, source line ranges, reference locations and
+warnings are retained in the existing ignored private report location only.
+
+There are 24 explicit DB-address reference occurrences, not necessarily 24 unique
+targets. No explicit CALL, UC or CC edge was recognized. Two invocation-like
+expressions remain unresolved and are not treated as calls. Two STRUCT headings
+and one VAR_INPUT heading were observed. Comments and quoted values do not
+independently create executable-reference edges. Quoted symbolic targets are
+accepted only in explicit declaration/call syntax contexts.
+
+Added a conservative lexical structure recognizer and a narrower worker mode
+that derives exactly two sources from the previous private classification report
+and original allowlist. No new source format, archive member or binary schema
+was assumed. Recognition covers common block/declaration delimiters and explicit
+references; it does not constitute full STEP 7 grammar/type checking, compilation,
+symbol resolution, runtime reachability, machine-behavior analysis or verification
+of controller-loaded code. Invocation-like syntax, indirect calls, nested or
+ambiguous declarations and unrecognized attributes remain unsupported or warned.
+
+Validation: **42 tests passed** (30 prior tests plus 12 source-structure tests).
+New synthetic coverage includes OB/FB/FC/DB/UDT declarations, multiline interfaces,
+explicit calls/instances/address/type references, comment/string false positives,
+malformed/incomplete syntax, BOM/encoding handling, byte bounds, unchanged input,
+and a confined-worker test with a deliberately corrupt excluded member that is
+not opened. Existing ZIP/resource-limit tests also passed. No dependencies were
+installed. The private report contains no raw extracted payload file.
+
+The two sources are sufficient for this partial block/declaration and explicit-
+reference inventory, but insufficient for meaningful project-wide PLC logic or
+call mapping. Broader source access or Siemens tools require a separate approved
+scope. No further archive phase, general extraction, project opening, execution,
+controller access, restore, data upload, commit or push was performed. Safe reader,
+worker, lexical recognizer, synthetic tests and sanitized status changes are ready
+for review; private reports must remain ignored.

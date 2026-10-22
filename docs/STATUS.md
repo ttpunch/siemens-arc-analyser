@@ -103,3 +103,35 @@ No commit was created and nothing was pushed. Commit locally after review:
 git add src/arc_analyser/cli.py tests/test_cli.py README.md docs/STATUS.md
 git commit -m "Verify Windows environment and strengthen archive inspection tests"
 ```
+
+## Offline ZIP metadata inspection - 2026-10-22
+
+This entry supersedes the earlier statement that no sample was available.
+Git status was initially clean. The local-data directory and ZIP/ARC extensions
+were confirmed ignored; no backup or local-data report was tracked.
+Exactly one archive was present directly in the designated local-data directory.
+No wider filesystem search was performed.
+
+The existing read-only inspector identified a ZIP-compatible container, and
+Python zipfile successfully read its central directory. Entry metadata uses
+stored and deflate compression methods; no entries advertise encryption.
+Metadata-only checks found no flagged absolute/parent-traversal paths, symlinks,
+duplicate or Windows case-colliding paths, or configured size/ratio concerns.
+Inspection was bounded to 100,000 entries and a 64 MiB central directory;
+warning thresholds were 1 GiB per entry, 10 GiB aggregate declared size, and
+compression ratios over 1,000. These checks do not certify archive safety or
+payload integrity, and do not verify local-header consistency or CRCs.
+
+Filename evidence suggests possible PLC-related and NC/configuration material.
+These are inferences only, not confirmed content. Drive/machine-data categories
+and a specific Siemens/controller archive variant were not established.
+Detailed paths, hierarchy, entry metadata, size and SHA-256 were retained only
+in an ignored local report. Before/after hashes matched. No entry payload was
+read or decompressed; no extraction, testzip, restore, Siemens application,
+controller connection, upload, installation, staging, commit or push occurred.
+
+The existing standard-library suite passed again: **11 tests, OK**.
+Next safe step: review the confidential local inventory on this PC and agree on
+an exact offline identification plan. Any payload inspection or extraction would
+be a separate task requiring explicit scope; generic ZIP recognition alone does
+not demonstrate Siemens archive decoding support.

@@ -2,7 +2,9 @@
 
 Read-only Siemens SINUMERIK `.arc` archive identification and analysis project.
 
-**Current status:** initial scaffold only. Archive extraction is not implemented.
+**Current status:** generic archive signature inspection, explicitly approved local
+ZIP batch copying/classification, and bounded read-only PLC source inventories
+are implemented. Proprietary Siemens binary decoding is not implemented.
 
 ## Windows setup
 ```powershell
@@ -31,3 +33,15 @@ $env:PYTHONPATH = 'src'
 The inspector recognizes generic ZIP, ustar TAR, 7z, and RAR signatures;
 it does not validate all archive contents or identify Siemens-specific variants.
 See [docs/STATUS.md](docs/STATUS.md) for verified coverage and environment findings.
+
+For the existing approved batch output, analyze only its five classified source
+files without reopening an archive:
+
+```powershell
+$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
+.\.venv\Scripts\python.exe -m arc_analyser.plc_analysis --run-locator local_data/completed_batch_locator.json
+```
+
+See [the source-analysis guide](docs/SOURCE_ANALYSIS.md) for limits, repeatability,
+confidential report handling and the distinction between lexical evidence and
+unknown project semantics.

@@ -379,3 +379,82 @@ Recommended next step: review the local text/source inventory and choose a
 separately scoped format-specific adapter only where documentation and fixtures
 support it. Opaque binaries remain undecoded. Safe source, synthetic tests and
 sanitized documentation are ready for review; private outputs must stay ignored.
+
+## Repeatable five-source PLC inventory - 2026-10-23
+
+Implemented a source-only command/API consuming the existing approved extracted
+run and its manifest. The original batch implementation and tests were present;
+64 existing tests passed before changes. The old README scaffold statement was
+corrected to describe the actual implemented stages and their limitations.
+No archive was opened in this stage, and none of the 298 binary/unknown payloads,
+other extracted text/XML payloads, original backups or Siemens applications was
+opened. Manifest metadata was used to select exactly the five previously
+classified readable sources, using generated file IDs rather than archive paths.
+
+Validation enforces complete approved-manifest/baseline agreement, generated and
+unique mappings, no path/reparse escape, 64 KiB per source and 256 KiB combined,
+CRC and actual-size agreement, strict supported encoding, before/after selected
+source hashes and unchanged manifest bytes. The worker retains a 256 MiB
+committed-memory cap and ten-second deadline. Default behavior is read-only for
+inputs; confidential JSON/Markdown reports are generated only in fresh ignored
+local directories, never overwriting old reports. No raw source payload is
+copied into tracked reports or logs. Excluded payloads are neither opened nor
+statted by the source-analysis API.
+
+Anonymized coverage, in deterministic private-report order:
+
+| Source ordinal | OB | FB | FC | DB | UDT | Variables | Explicit calls | References / unique | Numeric addresses | I/Q; T/C mentions | Unresolved diagnostics | Validation |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- |
+| 1 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 0 / 0 | 0 | 0; 0 | 1 | Passed, unchanged |
+| 2 | 5 | 0 | 0 | 0 | 0 | 76 | 5 | 6 / 6 | 0 | 0; 0 | 7 | Passed, unchanged |
+| 3 | 0 | 1 | 1 | 2 | 0 | 40 | 2 | 5 / 4 | 10 | 0; 0 | 5 | Passed, unchanged |
+| 4 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 / 0 | 0 | 0; 0 | 0 | Passed, unchanged |
+| 5 | 0 | 0 | 1 | 2 | 0 | 15 | 0 | 24 / 2 | 0 | 0; 0 | 24 | Passed, unchanged |
+
+Totals: 14 clearly delimited blocks (5 OB, 1 FB, 2 FC, 6 DB, no UDT in these
+sources), 135 recognized variable declarations, seven explicit CALL occurrences,
+35 reference occurrences, 12 unique block-level references and 11 directed graph
+edges. No duplicate block declaration was found in these five sources. The ten
+recognized numeric addresses are M-area mentions only; no physical I/O meaning
+or read/write semantics is inferred. Zero recognized I/Q or timer/counter
+mentions does not establish their absence from the complete PLC program.
+
+References include seven CALL, two explicit instance operands, two explicit DB
+open statements and 24 qualified DB references. Twenty-six reference occurrences
+resolve to a unique declaration in the readable scope; nine point outside it.
+A written numeric external target is an explicit mention, not a verified missing
+block implementation. Symbolic targets without a unique supported declaration do
+not gain resolved graph edges. Unique references use origin block, relationship
+and target; graph edges exclude unresolved symbols and ambiguous definitions.
+Unresolved counts are distinct source-line/reason pairs, not missing-block counts.
+
+Evidence levels remain separate: explicit delimiters/declarations and supported
+reference/address syntax were observed; indirect calls, unsupported declaration
+constructs and invocation syntax remain diagnostic; symbolic/indexed DB offsets
+are not guessed. All 24 qualified DB references lack a supported absolute numeric
+offset under this recognizer. Active DB contexts for relative accesses are not
+inferred. Body instruction semantics, reachability, controller-loaded logic,
+hardware wiring and project completeness remain unknown. The recognizer is not
+a full Siemens compiler, decompiler or proprietary binary-format decoder.
+
+Validation: **89 tests passed** (64 prior plus 25 new synthetic tests). Coverage
+includes OB/FB/FC/DB/UDT recognition, multiline declarations and AT syntax,
+comments/nested comments/quoted false positives, mixed BOM encodings, duplicate
+and absent targets, indirect or ambiguous calls, address mentions, malformed
+syntax, traversal/reparse and output confinement, source bounds and CRC changes,
+source-only selection, confidentiality of CLI output, unchanged inputs and
+repeatability. An absent synthetic excluded binary demonstrates that the analysis
+does not open excluded payloads. Two runs on the approved sources produced
+byte-identical JSON and Markdown contents in separate new directories. Selected
+source files and manifest bytes were unchanged before/after each run.
+
+Safe source/API changes, synthetic tests, updated README, a source-analysis guide
+and this sanitized status are ready for review. All confidential member names,
+block identifiers, addresses, hashes, paths, variable/type details and graph
+results remain ignored locally. No package installation, network transfer,
+controller access, restore, archive-content execution, commit or push occurred.
+Recommended next phase, only after separate approval: review the local unresolved
+inventory and design a bounded evidence plan for missing/external declarations
+or a documented offline export/format adapter. Current source files cannot prove
+binary-only logic, external symbol tables, project configuration or runtime flow.
+Do not expand into binary payloads, new archives or Siemens utilities implicitly.

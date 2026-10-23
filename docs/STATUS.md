@@ -458,3 +458,91 @@ inventory and design a bounded evidence plan for missing/external declarations
 or a documented offline export/format adapter. Current source files cannot prove
 binary-only logic, external symbol tables, project configuration or runtime flow.
 Do not expand into binary payloads, new archives or Siemens utilities implicitly.
+
+## Evidence-backed reference review and adapter plan - 2026-10-23
+
+Verified the prior baseline from authorized manifests/reports and the actual
+implementation before changes: 356 previously extracted files, five approved
+sources, 14 delimited blocks (5 OB, 1 FB, 2 FC, 6 DB), 135 variables, 35 reference
+occurrences, 26 occurrences with a unique in-scope declaration and nine outside-scope target
+occurrences. The existing suite passed **89 tests**. Metadata still records 298
+binary/unknown or classification-limited files; none was opened or statted here.
+No other extracted text/XML payload, archive, original backup or Siemens software
+was accessed. Reading metadata does not reauthorize any excluded payload.
+
+Implemented a private level-specific reference audit. Every unavailable/ambiguous
+block target, unestablished qualified DB member path, indirect call and unsupported
+invocation candidate records its origin where known, source location, relationship,
+explicit written target when available and reason. Syntax diagnostics have their
+own level. No item is labeled a proven missing implementation. New report schema
+version 2 includes a qualified-DB evidence inventory, unresolved-reference ledger
+and explicit metric definitions. All identifiers, field names, addresses, paths,
+hashes, detailed metadata and report contents stay in fresh ignored local output.
+
+| Metric | Verified previous stage | Current result |
+| --- | ---: | ---: |
+| Approved readable sources | 5 | 5 |
+| Explicit reference occurrences | 35 | 35 |
+| Occurrences resolving to compatible readable-scope declarations | 26 | 26 |
+| Written targets outside readable scope | 9 | 9 |
+| Unique block-level references | 12 | 12 |
+| Directed graph edges | 11 | 11 |
+| Qualified DB reference occurrences | 24 | 24 |
+| Symbolic DB member identities supported by explicit field declarations | Not inventoried at member level | 21 |
+| DB member-use identities not established in parsed declarations | Not inventoried at member level | 3 |
+| Qualified DB occurrences without explicit absolute numeric offsets | 24 | 24 |
+| Distinct source-line/reason diagnostic locations | 37 | 20 |
+| Passing tests | 89 | 115 |
+
+The 21 matched member-use occurrences are exact symbolic field matches in unique
+DB declarations. They establish member identity only, not packing, byte offsets,
+alignment, instance layout or machine behavior. The remaining three identities
+are unestablished in this parsed scope, not proven absent implementations. Indexed,
+nested, ambiguous and unavailable declarations do not gain inferred offsets.
+All 24 absolute offsets remain unknown. Numeric absolute addresses are accepted
+only when explicitly written; active DB contexts are never propagated by guess.
+The legacy DB relationship label denotes qualification, not guaranteed addressing.
+
+The diagnostic reduction reflects removal of misleading generic offset diagnostics
+where symbolic member identity is supported. It is not recovery of 17 blocks or
+resolution of the nine external target occurrences. Unresolved inventory levels
+include nine unavailable-target occurrences, three unestablished member paths,
+four unsupported invocation candidates and 20 diagnostic locations. These levels
+can describe overlapping evidence and must not be summed into a missing-block
+count. Occurrences, unique references, graph edges and diagnostics remain separate.
+
+Additional bounded recognizer safeguards check compatible kinds for symbolic
+calls, DB-open and instance references; balanced invocation delimiters; quoted
+keyword-like symbols; statement boundaries for indirect-expression evidence; and
+exact field spelling/duplicate/declaration-scope ambiguity. An explicit FB call
+and instance operand identify written references without proving their layout.
+No parser for proprietary binaries, project database schema or SDK was added.
+
+Validation: **115 tests passed**, including the original 89 and 26 new synthetic
+reference-audit/forbidden-read tests. Coverage includes supported symbolic/member
+resolution, external/ambiguous and duplicate declarations, absolute/indexed DB
+forms, indirect calls, malformed invocations, multiline declarations, quoted and
+commented false positives, compatible kinds, deterministic evidence, unchanged
+inputs, and forbidden open/stat of excluded binary, XML and other text payloads.
+Existing confinement/resource/output tests also passed. Two final real-source runs
+produced identical JSON and Markdown contents in separate ignored directories.
+All five selected source hashes and manifest hash match the previous stage, and
+before/after checks passed. Archives and excluded payloads were not opened.
+
+Updated the source-analysis guide and created a format-adapter plan separating
+verified results, documented capabilities, filename hypotheses and unknowns. The
+plan specifies architecture, version evidence, input/resource limits, output
+schemas, validation requirements and separate approval boundaries for each
+candidate. Reviewed local documentation supports S7-SCL ASCII import/export and
+SINUMERIK binary/punched-tape export options; it does not establish an implemented
+compiled-block decoder, project export SDK, drive/HMI schema or universal ARC parser.
+No planned adapter was represented as implemented or validated. No tool launch,
+installation, network transfer, controller access, restore, commit or push occurred.
+
+Recommended next bounded phase: a documentation-only check of a specific Classic
+STEP 7 offline text-export capability, alongside local review of the remaining
+source diagnostics. Opening a project, launching a utility or reading any extra
+payload would require a sanitized metadata-only preflight and explicit separate
+approval. This stage grants no expanded payload scope. Safe source/tests and the
+three sanitized documentation files are ready for review; confidential outputs
+remain ignored and must never be included in a commit.

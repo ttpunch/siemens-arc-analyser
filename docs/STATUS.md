@@ -546,3 +546,36 @@ payload would require a sanitized metadata-only preflight and explicit separate
 approval. This stage grants no expanded payload scope. Safe source/tests and the
 three sanitized documentation files are ready for review; confidential outputs
 remain ignored and must never be included in a commit.
+
+## Three unestablished DB member uses — 2026-10-23
+
+Verified the approved five-source manifest, previous private report schema,
+baseline metrics and source/manifest hash equality. Diagnosed all three remaining
+member-use identities: each has one unique DB declaration, no exact parsed field
+match (including no case-only match), and no exact member token in that DB's
+declaration region. All three qualifications are simple; candidate declarations
+have no parser warnings. No evidence justifies a grammar enhancement or invented
+mapping. All three remain unknown, without proving a missing implementation.
+
+Added a private declaration-evidence diagnostic ledger and seven synthetic tests;
+no member-resolution rules changed. Fresh ignored reports contain the three-row
+investigation and the evidence required next. The format-adapter plan is unchanged
+because this finding establishes no new format capability.
+
+Before/after counts remain: **21/24** member-use identities established, **3/24**
+unestablished; **24/24** absolute offsets unknown; **26/35** block-reference
+occurrences resolved within scope, **9/35** outside; **12** unique block references,
+**11** graph edges and **20** diagnostic locations. These are distinct metrics.
+
+Validation: **122 tests passed**. The initial 115-test attempt encountered Windows
+temporary-directory permissions; all 115 baseline tests passed after selecting
+the permitted temporary directory, followed by all 122 final tests. Two bounded
+source-only runs produced identical report content. All five approved inputs and
+the manifest match prior hashes and remain unchanged. No archive was reopened;
+excluded payloads remained unopened and uninspected. No installation, Siemens
+launch, network transfer, commit or push occurred.
+
+Next smallest step: obtain authoritative matching DB source declarations or an
+explicit symbol/export mapping through a separately approved scope. This run
+stops before that expansion. Review the safe code/tests and sanitized documents;
+private reports must remain ignored.

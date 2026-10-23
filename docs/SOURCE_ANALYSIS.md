@@ -129,3 +129,35 @@ project loading or a symbol-table export. Binary-only logic, hardware mapping,
 external symbol tables, missing blocks and runtime behavior cannot be established
 from these five files. Any expansion needs explicit approval and an independently
 verified format/tool workflow. Review this stage's coverage before a next phase.
+
+## Three-member investigation — 2026-10-23
+
+Revalidated the five-source manifest, prior private report schema, metrics and
+input hashes. Each of the three unestablished uses has a unique, clearly delimited
+DB declaration. All three are simple symbolic qualifications. None matches a
+parsed field, even by case alone, and the exact member token is absent from its
+DB declaration region after comments and literals are removed. The corresponding
+DB declarations have no parser warnings. These are unavailable field identities
+in the supplied declaration evidence, not demonstrated nested/indexed syntax,
+duplicate ambiguity, parser omissions, missing implementations or symbol mappings.
+
+No resolution grammar was changed. The private `DB_member_diagnoses` ledger records
+locations, candidate declarations, parsed fields, exact declaration-token matches,
+reasons and next evidence. A token in a type/initializer is only a review lead,
+never field proof. A fresh ignored JSON/Markdown report contains the three-row
+investigation, without disclosing its expressions or identifiers here.
+
+Before/after: **21/24** member identities established and **3/24** unestablished;
+**24/24** absolute offsets unknown; **26/35** block-reference occurrences resolved
+within readable scope and **9/35** outside. Unique block references remain **12**,
+graph edges **11**, and diagnostic locations **20**. These metrics are separate.
+
+Validation: **122 tests passed**, including seven new diagnostic regressions.
+Two bounded source-only runs produced identical reports. Source/manifest hashes
+match the previous report and remain unchanged. Existing worker limits remain
+256 MiB committed memory, ten seconds, 64 KiB per source, 256 KiB aggregate and
+reads of at most 4 KiB. No archive or excluded payload access was required.
+
+The next evidence needed is an authoritative matching DB source declaration or
+explicit symbol/export mapping. Obtaining anything outside these five sources
+requires separate approval. Absolute layout and runtime semantics remain unknown.

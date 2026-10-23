@@ -317,3 +317,65 @@ scope. No further archive phase, general extraction, project opening, execution,
 controller access, restore, data upload, commit or push was performed. Safe reader,
 worker, lexical recognizer, synthetic tests and sanitized status changes are ready
 for review; private reports must remain ignored.
+
+## Approved offline ZIP batch execution - 2026-10-23
+
+The user explicitly approved processing the complete reviewed batch under the
+previously stated limits. After reconnecting, the implementation and original
+42-test suite were verified present, and the expanded suite passed: **64 tests**.
+A fresh metadata-only preflight and the private baseline checks matched the
+reviewed archive before a baseline-bound local approval record was created.
+
+Preflight: 403 entries, comprising 356 files and 47 directories. Declared output
+was 8,785,752 bytes; the largest file was 1,719,783 bytes and the maximum declared
+compression ratio was 98:1. No blocking metadata concern was found. Seven names
+had potentially active/shortcut extensions; no such content was executed.
+Filename hypotheses were kept distinct from verified payload classification.
+
+Execution was approved and actually performed in one offline batch. **356 files
+were copied, totaling 8,785,752 bytes**, into a newly created ignored run directory
+using generated IDs and a confidential manifest. Directory hierarchy was retained
+as manifest metadata rather than trusted filesystem destinations. Every file's
+CRC and actual size was verified. All final output files matched manifest sizes,
+and archive SHA-256 before/after matched the private baseline. No temporary pending
+run remained. The original backup was never accessed or modified.
+
+| Local classification | Files |
+| --- | ---: |
+| Readable STEP 7-style source text | 5 |
+| Structured metadata | 1 |
+| Other verified text, including empty text | 52 |
+| Binary/unknown or beyond bounded classification budget | 298 |
+
+Limited lexical source analysis observed 14 clearly delimited blocks: 6 DB,
+5 OB, 1 FB and 2 FC, plus 33 explicit reference occurrences. These are syntax
+observations only, not complete symbol resolution, controller-loaded program
+verification, compilation, runtime behavior, or a complete PLC logic map.
+No proprietary binary database, NC, drive or HMI format was labeled decoded.
+No universal Siemens ARC parser or verified Siemens SDK is established here.
+
+The reusable CLI defaults to dry-run. Execution requires both an explicit opt-in
+and a private approval record matching the baseline and budgets. Metadata is
+inventoried in one central-directory pass; each file uses a separate confined
+worker. Limits remain 64 MiB per file, 512 MiB aggregate output, ratio <=100,
+100,000 entries, 64 MiB central-directory metadata, 32 MiB report allowance,
+64 MiB disk reserve, 256 MiB worker committed memory, ten seconds per worker,
+and 600 seconds total by default. Recognized nested archives, unsupported methods,
+encryption, unsafe paths/links/collisions and inconsistent headers fail closed.
+No automatic safe-skip policy is used. Caught failures roll back only the current
+run; final directories are published after whole-run verification and never
+reused or overwritten. Hard termination can leave an unpublished pending folder.
+
+Tests cover dry-run, approval gates, streaming limits, unsafe paths/collisions,
+links/reparse points, bombs, output confinement, interruptions and rollback,
+CRC errors, unsupported entries, fresh-run/no-overwrite behavior, disk/runtime
+budgets, classification, and unchanged input, alongside prior reader/parser tests.
+The workflow guide documents commands and limitations. All raw copies, original
+member names, approval records, hashes, source identifiers and manifests remain
+local and ignored. No installation, Siemens application launch, executable
+payload execution, CNC/PLC connection, restore, upload, commit or push occurred.
+
+Recommended next step: review the local text/source inventory and choose a
+separately scoped format-specific adapter only where documentation and fixtures
+support it. Opaque binaries remain undecoded. Safe source, synthetic tests and
+sanitized documentation are ready for review; private outputs must stay ignored.

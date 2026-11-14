@@ -18,6 +18,26 @@ python -m arc_analyser.cli "C:\path\to\backup.arc"
 
 Keep real archives locally. Do not commit machine backups, extracted data, passwords or confidential settings.
 
+## Codex skills
+
+The repository bundles five independent offline workflows under
+[`.agents/skills/`](.agents/skills). Ask Codex for the matching workflow, or
+invoke its skill by name:
+
+| Skill | Use it for |
+| --- | --- |
+| [`$siemens-archive-inspection`](.agents/skills/siemens-archive-inspection/SKILL.md) | Identify an archive, inventory available sources, and establish coverage. |
+| [`$siemens-step7-classic`](.agents/skills/siemens-step7-classic/SKILL.md) | Inspect SIMATIC Manager blocks, reference data, I/O assignments and spare-input candidates. |
+| [`$siemens-tia-project-reading`](.agents/skills/siemens-tia-project-reading/SKILL.md) | Read an offline TIA Portal project through a compatible Openness connection or the native editor. |
+| [`$sinumerik-plc-alarms`](.agents/skills/sinumerik-plc-alarms/SKILL.md) | Trace PLC alarm display, acknowledgment, NC reactions and restart conditions. |
+| [`$siemens-manual-research`](.agents/skills/siemens-manual-research/SKILL.md) | Find Siemens manual evidence and reconcile it with project behavior; optionally use NotebookLM. |
+
+These are instructions, not additional archive decoders or installed connectors.
+Classic GUI reading has been exercised on a sample project, but automatic
+reopening is not reliable on every launch. Bulk decoding of compiled Classic
+blocks and end-to-end TIA export are not established by these skills. NotebookLM
+requires a working connection and is optional.
+
 ## Development without installing packages
 
 If `py` cannot find Python, use the available `python` command (Python 3.11+).

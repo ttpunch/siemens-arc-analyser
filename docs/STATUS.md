@@ -579,3 +579,42 @@ Next smallest step: obtain authoritative matching DB source declarations or an
 explicit symbol/export mapping through a separately approved scope. This run
 stops before that expansion. Review the safe code/tests and sanitized documents;
 private reports must remain ignored.
+
+## STEP 7 Classic project reader and AWL recovery added
+
+A legacy STEP 7 V5 project delivered as a plain ZIP (carrying `ombstx/`, `sdb/`,
+`YDBs/`, `XUTILS/`, `s7asrcom/`) is now readable end-to-end without Siemens software.
+New code: `src/arc_analyser/step7/` (`s7_dbf`, `s7_project`, `s7_awl`,
+`s7_dotnet_awl`, `mc7dis.c`), plus `tools/s7awl/` for the optional .NET exporter.
+
+Verified facts, all evidenced in `docs/STEP7_PROJECT_FORMAT.md`:
+
+* `BAUSTEIN.DBF` + `SUBBLK.DBF` are dBase III tables that enumerate every block;
+  `TYP` 8=OB, 10=DB, 12=FC, 13=SFC, 14=FB, 27=VAT, 0=UDT. The sample project holds
+  162 blocks (54 FC, 18 FB, 5 OB, 60 DB, 11 SFC, 11 UDT, 3 VAT) — a regex over the
+  archive bytes over-counted FCs as 65, so the catalog is authoritative.
+* Archives can carry two copies of the same project; block counts must be taken per
+  `ombstx/offline/<n>` and never summed across copies.
+* `SUBBLK.DBT` memo entries are `ff ff` + u16 header (8) + u32 length + payload. The
+  declared length equals `MC5LEN`/`SSBLEN`/`ADDLEN`; reading to EOF returns the whole
+  memo file (162,304 B) instead of one part (788 B) and is the failure mode guarded
+  against here.
+* Part codes resolved: `00019` titles, `00005` library/parameter names, `00065`
+  reference list, `00012` code payload.
+* `XR*.DBF` `OPTYPE` resolved for 2=I, 3=Q, 4=M, 5=DB access, 12=FC call, 13=FB call;
+  8/9/14 remain unresolved and are reported verbatim.
+* Instruction-level AWL/STL is recoverable with two independent decoders, both
+  offline: `DotNetSiemensPLCToolBoxLibrary` (symbolic; 159/162 blocks exported, only
+  the VAT tables have no source) and `rz-libmc7` (linear MC7). Operator counts agree
+  exactly for 39/72 FC/FB blocks; the remainder are explained by know-how protection
+  and standard-library jump tables, not by silent disagreement.
+* Cross-check discipline: a decode must agree with the block's stored reference list
+  (part `00065`) and the xref `DBNB` set. Decoded listings are reported as read-only
+  reconstructions and must be confirmed in SIMATIC Manager before maintenance use.
+
+Validation: the suite runs `PYTHONPATH=src python -m unittest discover -s tests -v`
+on Python 3.11+ — the STEP 7 fixtures are synthetic DBF/DBT tables, so no archive or
+machine data is required and no project content is committed. No controller was
+contacted, nothing was extracted into the repository, and no proprietary decoder is
+bundled.
+

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>s7awl</AssemblyName>
+    <RootNamespace>S7AwlExport</RootNamespace>
+    <NoWarn>CS0618</NoWarn>
+    <!-- Point this at a built DotNetSiemensPLCToolBoxLibrary.dll (netstandard2.1),
+         e.g. dotnet build -f netstandard2.1 -c Release in that repository. -->
+    <S7ToolBoxDll Condition="'$(S7ToolBoxDll)' == ''">$(MSBuildThisFileDirectory)../../vendor/DotNetSiemensPLCToolBoxLibrary/LibNoDaveConnectionLibrary/bin/Release/netstandard2.1/DotNetSiemensPLCToolBoxLibrary.dll</S7ToolBoxDll>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="DotNetSiemensPLCToolBoxLibrary">
+      <HintPath>$(S7ToolBoxDll)</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- SharpZipLib: the NuGet package ID dropped its prefix; 0.86 is a different API. -->
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+  </ItemGroup>
+
+</Project>

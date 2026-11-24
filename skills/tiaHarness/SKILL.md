@@ -76,7 +76,7 @@ Openness `PublicAPI\V<nn>` folder, or the project extension (`.ap20`, `.ap21`).
 
 ## 4. STEP 7 V5 route (summary)
 
-Use `s7_project` for the block table, symbols and xref, then `s7awl` for symbolic AWL. On Windows use
+Use the `awl-decoder` skill for decoding and the call graph. Use `s7_project` for the block table, symbols and xref, then `s7awl` for symbolic AWL. On Windows use
 long paths (8.3 short paths give zero programs). OB1 and OB100 are normally readable and give the
 real call order. See `docs/AWL_RECOVERY.md` for build steps and the cross-check rule.
 

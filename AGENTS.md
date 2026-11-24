@@ -18,6 +18,7 @@ Development: Python 3.11+, typed code, tests, standard library first. Phase 1: i
 Skills under `skills/` are the agent-facing procedures and must stay executable as written:
 
 * `skills/siemens-arc-analyser/` — archive identification, STEP 7 V5 project inventory, AWL/STL recovery.
+* `skills/tiaHarness/` — explain an open TIA Portal project or a STEP 7 V5 project end to end: V20 vs V21 routing, read-only export, decoded SCL/AWL, NCU backup machine data, and the safety rules (never handle passwords, archive before compile, no failsafe sweeps).
 * `skills/tia-consistency-diagnosis/` — the evidence ladder for `IsConsistent = False`: project conversion log and fingerprint list (tier 0), Openness inventory plus attempted block export as an inconsistency oracle (tier 1), compiler messages (tier 2, mutating).
 
 When adding or changing a skill: keep helper scripts standard-library only, add tests that use synthetic fixtures rather than real machine data, and update the skill's `version` in the frontmatter.

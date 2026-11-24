@@ -10,3 +10,7 @@ reports/
 *.zip
 *.7z
 .env
+
+# .NET build output
+bin/
+obj/

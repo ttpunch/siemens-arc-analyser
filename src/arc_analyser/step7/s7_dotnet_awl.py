@@ -104,17 +104,20 @@ def main(argv: list[str] | None = None) -> int:
             "build it with:\n"
             "  dotnet build -c Release   (in tools/s7awl, with DOTNET_ROOT set to your SDK)"
         )
-    dotnet = DOTNET_ROOT / "dotnet"
+    dotnet = DOTNET_ROOT / ("dotnet.exe" if os.name == "nt" else "dotnet")
     if not dotnet.exists():
         raise SystemExit(f".NET runtime missing at {dotnet} (see references/local-tools.md)")
 
-    s7p = prepare(args.project, args.workdir)
+    # Resolve to a long, absolute path: the library finds no programs when handed a Windows
+    # 8.3 short path (for example C:\Users\NAME~1\...).
+    s7p = prepare(args.project, args.workdir).resolve()
+    args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=True)
 
     env = dict(os.environ)
     env["DOTNET_ROOT"] = str(DOTNET_ROOT)
     env["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
-    env["PATH"] = f"{DOTNET_ROOT}:{env.get('PATH', '')}"
+    env["PATH"] = f"{DOTNET_ROOT}{os.pathsep}{env.get('PATH', '')}"
 
     base = [str(dotnet), str(args.s7awl), str(s7p), "--out", str(args.out)]
     runs: list[list[str]] = []

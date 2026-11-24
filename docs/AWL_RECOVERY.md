@@ -75,6 +75,22 @@ PYTHONPATH=src python -m arc_analyser.step7.s7_awl project.zip --out out/ --awl-
 builds as a rizin plugin needing `rz_core`/`rz_util`; the plugin path is unnecessary
 for offline block analysis.
 
+## Windows notes (verified on a real V5 project)
+
+* Build both pieces with a .NET SDK (8 or newer; a newer SDK builds `net8.0` fine, and the
+  .NET 8 runtime must be installed to run it):
+  `dotnet build -c Release -f netstandard2.1` in `LibNoDaveConnectionLibrary`, then
+  `dotnet build -c Release -p:S7ToolBoxDll=<path to the built DLL>` in `tools/s7awl`.
+  `bin/` and `obj/` are gitignored.
+* The Python wrapper now picks `dotnet.exe`, uses `os.pathsep`, and resolves the project to a long
+  absolute path. If you call `s7awl.dll` directly, pass a **long** Windows path: with an 8.3 short
+  path (`C:\Users\NAME~1\...`) it reports `folders: 0`, `S7 programs: 0` and exports nothing.
+* Direct call (no wrapper): `dotnet s7awl.dll <project.s7p> --all --out <dir>`.
+* A project folder that holds a nested duplicate of itself and a second `ombstx/offline/0000000N`
+  block folder is normal for copied projects. The reader analyses the first folder; use `--folder`
+  to choose another.
+* Result on one 162-block project: 159 files exported; the 3 VAT tables have no source.
+
 ## How to know a decode is right
 
 Never trust a single source. On the sample project three independent sources agree on

@@ -1,7 +1,7 @@
 ---
 name: siemens-arc-analyser
 description: Use when identifying SINUMERIK ARC archives or STEP 7 projects read-only.
-version: 1.3.0
+version: 1.4.0
 license: MIT
 metadata:
   hermes:
@@ -64,6 +64,11 @@ Route A (symbolic, requires .NET) then Route B (independent cross-check):
 PYTHONPATH=src python -m arc_analyser.step7.s7_dotnet_awl <project.zip> --out out/ --all
 PYTHONPATH=src python -m arc_analyser.step7.s7_awl       <project.zip> --out out/ --awl-all
 ```
+
+On Windows use long (not 8.3) paths and the notes in `docs/AWL_RECOVERY.md`; the wrapper
+handles `dotnet.exe` and the PATH separator. Decoded AWL is symbolic and readable: start from
+OB1 to get the real call order, then follow `CALL`/`UC`/`CC` lines. For explanation tasks across
+TIA Portal and STEP 7 projects, see the `tiaHarness` skill.
 
 Verify a decode against the block's stored reference list (part `00065`) and the xref
 `DBNB` values before trusting it. Report a decode as a **read-only reconstruction**,
